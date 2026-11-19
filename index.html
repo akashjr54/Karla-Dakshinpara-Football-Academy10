@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>কররা দক্ষিণপাড়া ফুটবল একাডেমি</title>
+  <style>
+    :root {
+      --primary-green: #0d6b34;
+      --primary-green-dark: #074722;
+      --soft-green-bg: #eef7f1;
+      --accent-red: #c8102e;
+      --white-bg: #ffffff;
+      --card-bg: #ffffff;
+      --border-green: #cbe3d4;
+      --text-dark: #112418;
+      --text-muted: #4b6354;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--soft-green-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding-bottom: 45px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+      border-bottom: 4px solid var(--accent-red);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .logo-frame {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #ffffff;
+      background: #ffffff;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .academy-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #ffffff;
+    }
+
+    .customize-btn {
+      background: #ffffff;
+      color: var(--primary-green-dark);
+      border: 2px solid var(--primary-green-dark);
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .banner-wrapper {
+      margin: 16px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border-green);
+      background: var(--white-bg);
+      box-shadow: 0 3px 10px rgba(13, 107, 52, 0.08);
+    }
+
+    .banner-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      background: #e2f0e7;
+    }
+
+    .banner-caption {
+      background: var(--primary-green);
+      padding: 10px 14px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 0 16px 18px;
+    }
+
+    @media (min-width: 640px) {
+      .stats-bar {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .stat-box {
+      background: var(--white-bg);
+      border: 1px solid var(--border-green);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(13, 107, 52, 0.06);
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-green);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .section-heading {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 24px 16px 14px;
+      color: var(--primary-green-dark);
+      padding-bottom: 8px;
+    }
+
+    .section-heading::after {
+      content: "";
+      display: block;
+      width: 90px;
+      height: 3px;
+      background: var(--primary-green);
+      margin: 8px auto 0;
+      border-radius: 2px;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px 18px;
+    }
+
+    .filter-btn {
+      background: var(--white-bg);
+      color: var(--primary-green-dark);
+      border: 1.5px solid var(--primary-green);
+      border-radius: 20px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .filter-btn.active {
+      background: var(--primary-green);
+      border-color: var(--primary-green);
+      color: #ffffff;
+    }
+
+    .squad-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 0 16px;
+    }
+
+    @media (min-width: 640px) {
+      .squad-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .player-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-green);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 3px 10px rgba(13, 107, 52, 0.08);
+    }
+
+    .jersey-tag {
+      display: inline-block;
+      background: var(--primary-green);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .player-role {
+      float: right;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary-green-dark);
+      background: #e4f3ea;
+      padding: 4px 9px;
+      border-radius: 6px;
+      border: 1px solid var(--border-green);
+    }
+
+    .player-name {
+      clear: both;
+      text-align: center;
+      font-size: 19px;
+      font-weight: 700;
+      margin: 10px 0;
+      color: var(--text-dark);
+    }
+
+    .player-photo {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      background: #e5f1ea;
+      border: 1px solid var(--border-green);
+    }
+
+    footer {
+      margin: 28px 16px 0;
+      background: var(--white-bg);
+      border: 1px solid var(--border-green);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 14px;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 460px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #ffffff;
+      color: var(--text-dark);
+      border: 2px solid var(--primary-green);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border-green);
+      padding-bottom: 10px;
+    }
+
+    .modal-header h3 {
+      font-size: 17px;
+      color: var(--primary-green-dark);
+    }
+
+    .close-x {
+      background: #e6f2ea;
+      color: var(--text-dark);
+      border: 1px solid var(--border-green);
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--border-green);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--primary-green-dark);
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="file"],
+    .form-group select {
+      width: 100%;
+      background: #f5fbf7;
+      color: var(--text-dark);
+      border: 1px solid #8fc0a2;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .player-edit-box {
+      background: #f4faf6;
+      border: 1px solid var(--border-green);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+
+    .player-edit-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: var(--primary-green-dark);
+      font-size: 13px;
+    }
+
+    .btn-remove-player {
+      background: #dc3545;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-add-player {
+      width: 100%;
+      background: #e4f3ea;
+      color: var(--primary-green-dark);
+      border: 1.5px dashed var(--primary-green);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .preview-thumb {
+      width: 72px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-top: 4px;
+      display: none;
+      border: 1px solid var(--primary-green);
+    }
+
+    .modal-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn-save {
+      flex: 1;
+      background: var(--primary-green);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-reset {
+      background: #e8f1ec;
+      color: var(--text-dark);
+      border: 1px solid var(--border-green);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-export {
+      width: 100%;
+      margin-top: 8px;
+      background: #074722;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-area">
+      <div class="logo-frame">
+        <img id="logoImg" src="logo.jpg" alt="Logo" />
+      </div>
+      <div id="academyTitle" class="academy-title">কররা দক্ষিণপাড়া ফুটবল<br>একাডেমি</div>
+    </div>
+    <button class="customize-btn" onclick="openPinCheck()">কাস্টমাইজ<br>প্যানেল</button>
+  </header>
+
+  <section class="banner-wrapper">
+    <img id="bannerImg" class="banner-img" src="banner.jpg" alt="Banner" />
+    <div id="bannerText" class="banner-caption">কররা দক্ষিণপাড়া ফুটবল একাডেমি - ফাইটার্স</div>
+  </section>
+
+  <section class="stats-bar">
+    <div class="stat-box">
+      <div id="statTrophies" class="stat-value">৫</div>
+      <div class="stat-label">ট্রফি / অর্জন</div>
+    </div>
+    <div class="stat-box">
+      <div id="statPlayersCount" class="stat-value">১২</div>
+      <div class="stat-label">স্কোয়াড খেলোয়াড়</div>
+    </div>
+    <div class="stat-box">
+      <div id="statLocation" class="stat-value">কররা, ভাঙ্গা</div>
+      <div class="stat-label">ঠিকানা</div>
+    </div>
+    <div class="stat-box">
+      <div id="statPhone" class="stat-value">০১৭XX-XXXXXX</div>
+      <div class="stat-label">যোগাযোগ</div>
+    </div>
+  </section>
+
+  <h2 class="section-heading">স্কোয়াড ও খেলোয়াড়বৃন্দ</h2>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterSquad('সবাই', this)">সবাই</button>
+    <button class="filter-btn" onclick="filterSquad('গোলকিপার', this)">গোলকিপার</button>
+    <button class="filter-btn" onclick="filterSquad('ডিফেন্ডার', this)">ডিফেন্ডার</button>
+    <button class="filter-btn" onclick="filterSquad('মিডফিল্ডার', this)">মিডফিল্ডার</button>
+    <button class="filter-btn" onclick="filterSquad('স্ট্রাইকার/ফরোয়ার্ড', this)">স্ট্রাইকার/ফরোয়ার্ড</button>
+  </div>
+
+  <main id="squadGrid" class="squad-grid"></main>
+
+  <footer>
+    <div id="footerAddress">ঠিকানা: কররা দক্ষিণপাড়া, আজিম নগর, ভাঙ্গা, ফরিদপুর</div>
+    <div id="footerPhone">ফোন: ০১৭XX-XXXXXX</div>
+  </footer>
+
+  <div id="customModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>কাস্টমাইজ প্যানেল</h3>
+        <button class="close-x" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="form-group">
+        <label>লোগো ছবি (গ্যালারি থেকে বাছুন)</label>
+        <input type="file" accept="image/*" onchange="pickGalleryImage(this, 'logo')" />
+        <img id="prev_logo" class="preview-thumb" alt="Logo Preview" />
+      </div>
+
+      <div class="form-group">
+        <label>ব্যানার ছবি (গ্যালারি থেকে বাছুন)</label>
+        <input type="file" accept="image/*" onchange="pickGalleryImage(this, 'banner')" />
+        <img id="prev_banner" class="preview-thumb" alt="Banner Preview" />
+      </div>
+
+      <div class="form-group">
+        <label>ব্যানারের লেখা</label>
+        <input type="text" id="inputBannerText" />
+
+        <label>ট্রফি / অর্জনের সংখ্যা</label>
+        <input type="text" id="inputTrophies" />
+
+        <label>ঠিকানা</label>
+        <input type="text" id="inputLocation" />
+
+        <label>ফোন নম্বর</label>
+        <input type="text" id="inputPhone" />
+      </div>
+
+      <div class="form-group">
+        <label>খেলোয়াড়দের ছবি ও তথ্য (১২টি ঘর আগে থেকেই রেডি)</label>
+        <div id="playerInputsContainer"></div>
+        <button type="button" class="btn-add-player" onclick="addNewPlayerRow()">+ আরও নতুন খেলোয়াড় যোগ করুন</button>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-save" onclick="saveChanges()">সেভ করুন</button>
+        <button class="btn-reset" onclick="resetChanges()">ডিফল্টে ফিরুন</button>
+      </div>
+      <button type="button" class="btn-export" onclick="downloadHtmlFile()">index.html ফাইল ডাউনলোড করুন</button>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_PIN = "1717";
+    const STORAGE_KEY = "kdp_academy_12slots_v1";
+
+    const DEFAULT_DATA = {
+      academyName: "কররা দক্ষিণপাড়া ফুটবল একাডেমি",
+      logo: "logo.jpg",
+      banner: "banner.jpg",
+      bannerText: "কররা দক্ষিণপাড়া ফুটবল একাডেমি - ফাইটার্স",
+      trophies: "৫",
+      location: "কররা, ভাঙ্গা",
+      phone: "০১৭XX-XXXXXX",
+      players: [
+        { id: "p_1", name: "আকাশ", jersey: "#১৭", role: "মিডফিল্ডার", photo: "p1.jpg" },
+        { id: "p_2", name: "খেলোয়াড় ২", jersey: "#২", role: "ডিফেন্ডার", photo: "p2.jpg" },
+        { id: "p_3", name: "খেলোয়াড় ৩", jersey: "#৩", role: "ডিফেন্ডার", photo: "p3.jpg" },
+        { id: "p_4", name: "খেলোয়াড় ৪", jersey: "#৪", role: "ডিফেন্ডার", photo: "p4.jpg" },
+        { id: "p_5", name: "খেলোয়াড় ৫", jersey: "#৫", role: "ডিফেন্ডার", photo: "p5.jpg" },
+        { id: "p_6", name: "খেলোয়াড় ৬", jersey: "#৬", role: "মিডফিল্ডার", photo: "p6.jpg" },
+        { id: "p_7", name: "খেলোয়াড় ৭", jersey: "#৭", role: "স্ট্রাইকার/ফরোয়ার্ড", photo: "p7.jpg" },
+        { id: "p_8", name: "খেলোয়াড় ৮", jersey: "#৮", role: "মিডফিল্ডার", photo: "p8.jpg" },
+        { id: "p_9", name: "খেলোয়াড় ৯", jersey: "#৯", role: "স্ট্রাইকার/ফরোয়ার্ড", photo: "p9.jpg" },
+        { id: "p_10", name: "খেলোয়াড় ১০", jersey: "#১০", role: "মিডফিল্ডার", photo: "p10.jpg" },
+        { id: "p_11", name: "খেলোয়াড় ১১", jersey: "#১১", role: "স্ট্রাইকার/ফরোয়ার্ড", photo: "p11.jpg" },
+        { id: "p_12", name: "খেলোয়াড় ১", jersey: "#১", role: "গোলকিপার", photo: "p12.jpg" }
+      ]
+    };
+
+    const ROLES = ["গোলকিপার", "ডিফেন্ডার", "মিডফিল্ডার", "স্ট্রাইকার/ফরোয়ার্ড"];
+
+    let currentData = loadData();
+    let draftPlayers = [];
+    let draftImages = {};
+    let activeFilter = "সবাই";
+
+    function cloneDefault() {
+      return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
+
+    function loadData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return cloneDefault();
+        const parsed = JSON.parse(raw);
+        return {
+          ...cloneDefault(),
+          ...parsed,
+          players: Array.isArray(parsed.players)
+            ? parsed.players
+            : cloneDefault().players
+        };
+      } catch (e) {
+        return cloneDefault();
+      }
+    }
+
+    function renderAll() {
+      document.title = currentData.academyName || DEFAULT_DATA.academyName;
+      document.getElementById("logoImg").src = currentData.logo || DEFAULT_DATA.logo;
+      document.getElementById("bannerImg").src = currentData.banner || DEFAULT_DATA.banner;
+      document.getElementById("bannerText").textContent =
+        currentData.bannerText || DEFAULT_DATA.bannerText;
+
+      document.getElementById("statTrophies").textContent = currentData.trophies || "০";
+      document.getElementById("statPlayersCount").textContent = String(currentData.players.length);
+      document.getElementById("statLocation").textContent = currentData.location || "কররা, ভাঙ্গা";
+      document.getElementById("statPhone").textContent = currentData.phone || "০১৭XX-XXXXXX";
+
+      document.getElementById("footerAddress").textContent =
+        "ঠিকানা: " + (currentData.location || "কররা দক্ষিণপাড়া, ভাঙ্গা, ফরিদপুর");
+      document.getElementById("footerPhone").textContent =
+        "ফোন: " + (currentData.phone || "০১৭XX-XXXXXX");
+
+      renderSquadCards();
+    }
+
+    function filterSquad(role, btnEl) {
+      activeFilter = role;
+      const allBtns = document.querySelectorAll(".filter-btn");
+      allBtns.forEach((b) => b.classList.remove("active"));
+      if (btnEl) btnEl.classList.add("active");
+      renderSquadCards();
+    }
+
+    function renderSquadCards() {
+      const grid = document.getElementById("squadGrid");
+      grid.innerHTML = "";
+
+      const list = activeFilter === "সবাই"
+        ? currentData.players
+        : currentData.players.filter((p) => p.role === activeFilter);
+
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="player-card"><div class="player-name">এই পজিশনে কোনো খেলোয়াড় নেই</div></div>`;
+        return;
+      }
+
+      list.forEach((player) => {
+        const card = document.createElement("div");
+        card.className = "player-card";
+        card.innerHTML = `
+          <span class="jersey-tag">${escapeHtml(player.jersey)}</span>
+          <span class="player-role">${escapeHtml(player.role)}</span>
+          <div class="player-name">${escapeHtml(player.name)}</div>
+          <img class="player-photo" src="${escapeAttr(player.photo)}" alt="${escapeAttr(player.name)}" />
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openPinCheck() {
+      const pin = prompt("অ্যাডমিন পিন দিন:");
+      if (pin === null) return;
+      if (pin.trim() === ADMIN_PIN) {
+        openCustomizeModal();
+      } else {
+        alert("ভুল পিন! শুধুমাত্র অ্যাডমিন কাস্টমাইজ করতে পারবেন।");
+      }
+    }
+
+    function openCustomizeModal() {
+      draftPlayers = JSON.parse(JSON.stringify(currentData.players));
+      draftImages = {
+        logo: currentData.logo,
+        banner: currentData.banner
+      };
+      draftPlayers.forEach((p) => {
+        draftImages[p.id] = p.photo;
+      });
+
+      document.getElementById("inputBannerText").value = currentData.bannerText || "";
+      document.getElementById("inputTrophies").value = currentData.trophies || "";
+      document.getElementById("inputLocation").value = currentData.location || "";
+      document.getElementById("inputPhone").value = currentData.phone || "";
+
+      showThumb("prev_logo", draftImages.logo);
+      showThumb("prev_banner", draftImages.banner);
+
+      renderPlayerEditorList();
+      document.getElementById("customModal").style.display = "flex";
+    }
+
+    function syncDraftPlayersFromInputs() {
+      draftPlayers.forEach((p) => {
+        const nameEl = document.getElementById("p_name_" + p.id);
+        const jerseyEl = document.getElementById("p_jersey_" + p.id);
+        const roleEl = document.getElementById("p_role_" + p.id);
+        if (nameEl) p.name = nameEl.value;
+        if (jerseyEl) p.jersey = jerseyEl.value;
+        if (roleEl) p.role = roleEl.value;
+      });
+    }
+
+    function addNewPlayerRow() {
+      syncDraftPlayersFromInputs();
+      const newId = "p_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+      const nextNum = draftPlayers.length + 1;
+      const newPlayer = {
+        id: newId,
+        name: "খেলোয়াড় " + nextNum,
+        jersey: "#" + nextNum,
+        role: "মিডফিল্ডার",
+        photo: "player.jpg"
+      };
+      draftPlayers.push(newPlayer);
+      draftImages[newId] = newPlayer.photo;
+      renderPlayerEditorList();
+    }
+
+    function removePlayerRow(id) {
+      syncDraftPlayersFromInputs();
+    
